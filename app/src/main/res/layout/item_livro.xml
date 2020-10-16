@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon_livro"
+            android:src="@drawable/icon_book"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            />
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo do Livros"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_toRightOf="@id/icon_livro"
+            android:layout_alignParentTop="true"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:id="@+id/icon_emprestimo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_how_to_reg_24"
+            android:layout_toRightOf="@id/titulo"
+            android:layout_alignParentTop="true"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/autor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autor do Livro"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/icon_livro"
+            android:layout_below="@id/titulo"
+            />
+        <TextView
+            android:id="@+id/editora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editor do Livro"
+            android:textSize="12dp"
+            android:layout_toRightOf="@id/icon_livro"
+            android:layout_below="@id/autor"
+
+            />
+
+    </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
