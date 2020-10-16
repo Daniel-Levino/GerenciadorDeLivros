@@ -1,6 +1,8 @@
 package com.levinocriacoes.gerenciadordelivros.dominio;
 
-public class Livro {
+import java.io.Serializable;
+
+public class Livro implements Serializable {
     private Long id;
     private String titulo, autor, editora;
     private int emprestado;
@@ -12,6 +14,14 @@ public class Livro {
         this.editora = editora;
         this.emprestado = emprestado;
     }
+
+    public Livro(String titulo, String autor, String editora, int emprestado) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.editora = editora;
+        this.emprestado = emprestado;
+    }
+
 
     //GETTERS AND SETTERS
     public Long getId() {return id;}
