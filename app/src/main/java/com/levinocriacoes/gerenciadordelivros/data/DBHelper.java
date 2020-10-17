@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper instance;
 
     private static String SQL_CREATE = String.format(
-            "CREATE TABLE %s (%S INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     "%s TEXT NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, %s INTEGER NOT NULL)",
             LivroContract.TABLE_NAME,
             LivroContract.Columns._ID,
@@ -32,7 +32,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public static DBHelper getInstance(Context context){
-        if(instance == null) instance = new DBHelper(context);
+        if(instance == null) {
+            instance = new DBHelper(context);
+        }
 
         return instance;
     }

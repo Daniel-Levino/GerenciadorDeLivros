@@ -21,7 +21,10 @@ public class LivroDAO {
     }
 
     public static LivroDAO getInstance(Context context){
-        if (instance == null) instance = new LivroDAO(context.getApplicationContext());
+        if (instance == null) {
+            instance = new LivroDAO(context.getApplicationContext());
+        }
+
         return instance;
     }
 
@@ -48,7 +51,7 @@ public class LivroDAO {
         ){
             if(c.moveToFirst()){
                 do{
-                    Livro l = fromCursos(c);
+                    Livro l = LivroDAO.fromCursor(c);
                     livros.add(l);
                 }while(c.moveToNext());
             }
@@ -57,7 +60,7 @@ public class LivroDAO {
         return livros;
     }
 
-    private static Livro fromCursos (Cursor c){
+    private static Livro fromCursor (Cursor c){
 
         Long id = c.getLong(c.getColumnIndex(LivroContract.Columns._ID));
         String titulo = c.getString(c.getColumnIndex(LivroContract.Columns.TITULO));
