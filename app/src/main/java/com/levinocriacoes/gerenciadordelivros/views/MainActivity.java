@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.levinocriacoes.gerenciadordelivros.EditarLivroActivity;
 import com.levinocriacoes.gerenciadordelivros.R;
@@ -20,7 +21,7 @@ import com.levinocriacoes.gerenciadordelivros.dominio.Livro;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LivroAdapter.OnLivroListener {
 
     private LivroDAO livroDAO;
     private LivroAdapter livroAdapter;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Livro> listaLivros = livroDAO.list();
 
-        livroAdapter = new LivroAdapter(listaLivros,this);
+        livroAdapter = new LivroAdapter(listaLivros,this, this);
 
         recycleView.setAdapter(livroAdapter);
     }
@@ -83,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 100 && resultCode == RESULT_OK){
             atualizaListaLivros();
         }
+        if(requestCode == 101 && resultCode == RESULT_OK){
+            atualizaListaLivros();
+        }
+
     }
 
     public void atualizaListaLivros(){
@@ -91,4 +96,20 @@ public class MainActivity extends AppCompatActivity {
         livroAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onLivroClick(int posicao) {
+        Intent intent = new Intent(getApplicationContext(),EditarLivroActivity.class);
+        intent.putExtra("livro",livroAdapter.getItem(posicao));
+        startActivityForResult(intent, 101);
+    }
+
+    @Override
+    public void onLivroLongClick(int posicao) {
+
+        Livro livro = livroAdapter.getItem(posicao);
+        livroDAO.delete(livro);
+        atualizaListaLivros();
+
+        Toast.makeText(this,"Livro Excluido Com Sucesso "+posicao, Toast.LENGTH_SHORT).show();
+    }
 }

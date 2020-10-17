@@ -24,9 +24,12 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
     private List<Livro> livros;
     private Context context;
 
-    public LivroAdapter(List<Livro> livros, Context context) {
+    private OnLivroListener onLivroListener;
+
+    public LivroAdapter(List<Livro> livros, Context context, OnLivroListener onLivroListener) {
         this.livros = livros;
         this.context = context;
+        this.onLivroListener = onLivroListener;
     }
 
     @NonNull
@@ -36,7 +39,7 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_livro,parent,false);
 
-        LivroHolder livroHolder = new LivroHolder(view);
+        LivroHolder livroHolder = new LivroHolder(view, onLivroListener);
 
         return livroHolder;
     }
@@ -51,8 +54,12 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
 
         if(livro.getEmprestado() == 1){
             holder.icon_livro.setColorFilter(Color.GRAY);
-            holder.titulo.setTextColor(Color.GRAY);
             holder.icon_emprestado.setVisibility(View.VISIBLE);
+            holder.titulo.setTextColor(Color.GRAY);
+        }else {
+            holder.icon_livro.setColorFilter(Color.parseColor("#0460D9"));
+            holder.icon_emprestado.setVisibility(View.INVISIBLE);
+            holder.titulo.setTextColor(Color.parseColor("#032D80"));
         }
 
     }
@@ -68,12 +75,18 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
 
     }
 
+    public Livro getItem(int posicao){
+        return livros.get(posicao);
+    }
+
     public class LivroHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         public TextView titulo, autor, editora;
         public ImageView icon_livro, icon_emprestado;
 
-        public LivroHolder(View view){
+        public OnLivroListener onLivroListener;
+
+        public LivroHolder(View view, OnLivroListener onLivroListener){
             super(view);
 
             titulo = view.findViewById(R.id.titulo);
@@ -82,6 +95,8 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
             icon_livro = view.findViewById((R.id.icon_livro));
             icon_emprestado = view.findViewById(R.id.icon_emprestimo);
 
+            this.onLivroListener = onLivroListener;
+
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
 
@@ -89,17 +104,20 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroHolder>
 
         @Override
         public void onClick(View view) {
-            int pos = getAdapterPosition()+1;
-            //pos++;
-            Toast.makeText(context,"OnClick pos: 0"+pos, Toast.LENGTH_SHORT).show();
+            onLivroListener.onLivroClick(getAdapterPosition());
 
         }
 
         @Override
         public boolean onLongClick(View view) {
-            int pos = getAdapterPosition()+1;
-            Toast.makeText(context, "OnLongClick pos: 0"+pos, LENGTH_SHORT).show();
+
+            onLivroListener.onLivroLongClick(getAdapterPosition());
             return true;
         }
+    }
+
+    public interface OnLivroListener{
+        void onLivroClick(int posicao);
+        void onLivroLongClick(int posicao);
     }
 }
