@@ -12,16 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.levinocriacoes.gerenciadordelivros.EditarLivroActivity;
 import com.levinocriacoes.gerenciadordelivros.R;
 import com.levinocriacoes.gerenciadordelivros.adapter.LivroAdapter;
 import com.levinocriacoes.gerenciadordelivros.data.LivroDAO;
+import com.levinocriacoes.gerenciadordelivros.dialog.DeleteDialog;
 import com.levinocriacoes.gerenciadordelivros.dominio.Livro;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LivroAdapter.OnLivroListener {
+public class MainActivity extends AppCompatActivity implements LivroAdapter.OnLivroListener,
+        DeleteDialog.OnDeleteListener {
 
     private LivroDAO livroDAO;
     private LivroAdapter livroAdapter;
@@ -107,9 +107,20 @@ public class MainActivity extends AppCompatActivity implements LivroAdapter.OnLi
     public void onLivroLongClick(int posicao) {
 
         Livro livro = livroAdapter.getItem(posicao);
+
+        DeleteDialog dialog = new DeleteDialog();
+        dialog.setLivro(livro);
+        dialog.show(getSupportFragmentManager(),"deleteDialog");
+
+    }
+
+    @Override
+    public void onDelete(Livro livro) {
+
         livroDAO.delete(livro);
         atualizaListaLivros();
 
-        Toast.makeText(this,"Livro Excluido Com Sucesso "+posicao, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Livro Excluido Com Sucesso ", Toast.LENGTH_SHORT).show();
+
     }
 }

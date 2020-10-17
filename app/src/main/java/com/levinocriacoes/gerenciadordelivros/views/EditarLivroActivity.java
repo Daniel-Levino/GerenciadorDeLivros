@@ -1,4 +1,4 @@
-package com.levinocriacoes.gerenciadordelivros;
+package com.levinocriacoes.gerenciadordelivros.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.levinocriacoes.gerenciadordelivros.R;
 import com.levinocriacoes.gerenciadordelivros.data.LivroDAO;
 import com.levinocriacoes.gerenciadordelivros.dominio.Livro;
 
